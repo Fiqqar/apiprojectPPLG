@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="laliga">#FF4B44</color>
+    <color name="epl">#3D195B</color>
 </resources>

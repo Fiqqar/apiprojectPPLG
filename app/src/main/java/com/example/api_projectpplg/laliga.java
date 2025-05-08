@@ -21,51 +21,51 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class laliga extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ProgressBar pbLoading;
-    LinearLayoutManager layoutManager;
-    TimAdapter adapter;
-    List<Tim> timList = new ArrayList<>();
+    RecyclerView recyclerviewLaliga;
+    ProgressBar pbLoadingLaliga;
+    TimAdapter adptr;
+    LinearLayoutManager managerLayout;
+    List<Tim> listTim = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_laliga);
 
-        recyclerView = findViewById(R.id.recyclerview);
-        pbLoading = findViewById(R.id.pbLoading);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimAdapter(timList);
-        recyclerView.setAdapter(adapter);
+        recyclerviewLaliga = findViewById(R.id.recyclerviewLaliga);
+        recyclerviewLaliga.setLayoutManager(new LinearLayoutManager(this));
+        pbLoadingLaliga = findViewById(R.id.pbLoadingLaliga);
+        adptr = new TimAdapter(listTim);
+        recyclerviewLaliga.setAdapter(adptr);
+        managerLayout = new LinearLayoutManager(this);
 
-        fetchApi();
+        fetch();
     }
 
-    private void fetchApi() {
-        RetrofitClient.getRetrofitClient().getTim().enqueue(new Callback<TimResponse>() {
+    private void fetch() {
+        RetrofitClient.getRetrofitClient().getLaliga().enqueue(new Callback<TimResponse>() {
             @Override
             public void onResponse(Call<TimResponse> call, Response<TimResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Tim> teams = response.body().getTeams();
                     if (teams != null) {
-                        timList.addAll(teams);
-                        adapter.notifyDataSetChanged();
-                        recyclerView.setVisibility(View.VISIBLE);
+                        listTim.addAll(teams);
+                        adptr.notifyDataSetChanged();
+                        recyclerviewLaliga.setVisibility(View.VISIBLE);
                     }
-                    pbLoading.setVisibility(View.GONE);
+                    pbLoadingLaliga.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<TimResponse> call, Throwable throwable) {
-                pbLoading.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                pbLoadingLaliga.setVisibility(View.GONE);
+                Toast.makeText(laliga.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("API_ERROR", "Error while fetching data: " + throwable.getMessage());
             }
         });
     }
-    }
+}
