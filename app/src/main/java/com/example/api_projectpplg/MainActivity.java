@@ -1,6 +1,7 @@
 package com.example.api_projectpplg;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<TimResponse> call, Throwable throwable) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API_ERROR", "Error while fetching data: " + throwable.getMessage());
             }
         });
     }
